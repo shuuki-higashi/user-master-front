@@ -15,10 +15,11 @@
 !jsconfig.json
 !nuxt.config.js
 !package.json
+!docker/docker-entrypoint.sh
 
 # docker
-#docker
-entrypoint.sh
+.dockerignore
+Dockerfile
 
 # node nuxt
 */node_modules
@@ -30,8 +31,8 @@ entrypoint.sh
 */.git*
 
 # log
-npm-debug.log
+*/npm-debug.log
 
 # editor
 */.idea
-.editorconfig
+*/.editorconfig

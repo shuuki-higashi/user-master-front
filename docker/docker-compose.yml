@@ -5,15 +5,14 @@ services:
     stdin_open: true
     init: true
     build:
-      context: ../
+      context: ..
       dockerfile: Dockerfile
     volumes:
-      - ../docker/nuxt:/app/.nuxt
-      - ../docker/entrypoint.sh:/app/entrypoint.sh
-      - ../:/app
+      - ../:/tmp
     working_dir: /app
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: development
-    command: ['dev']
+      NUXT_HOST: 0.0.0.0
+    command: ['yarn', 'dev']

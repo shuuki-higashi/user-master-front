@@ -5,14 +5,10 @@ FROM node:alpine
 ENV LANG ja-JP.UTF-8
 ENV TZ Asia/Tokyo
 
+WORKDIR /tmp
+COPY ./ /app/
 WORKDIR /app
-# install npm packages
-RUN apk update && \
-    npm install -g yarn && \
-    yarn
+RUN rm -r .nuxt .git* .editorconfig .idea
+RUN yarn
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 EXPOSE 3000
-
-# set EntryPoint shell script
-COPY --chown=node:node ./docker/entrypoint.sh ./
-RUN chmod 755 entrypoint.sh
-ENTRYPOINT "entrypoint.sh"

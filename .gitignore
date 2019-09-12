@@ -91,5 +91,3 @@ sw.*
 *.swp
 
 # Project file
-entrypoint.sh
-docker/nuxt
