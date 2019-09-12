@@ -12,7 +12,7 @@ services:
       - ../:/tmp/nuxt
     working_dir: /app
     ports:
-      - "3000:3000"
+      - "3000:80"
     environment:
       NODE_ENV: development
       NUXT_HOST: 0.0.0.0
