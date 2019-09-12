@@ -18,6 +18,7 @@
 
 # docker
 #docker
+entrypoint.sh
 
 # node nuxt
 */node_modules
