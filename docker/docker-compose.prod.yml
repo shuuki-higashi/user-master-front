@@ -1,66 +1,19 @@
 version: '3.7'
 services:
-  server:
-    image: nginx
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - "80:80"
-    depends_on:
-      - express
-    links:
-      - express
-    environment:
-      NGINX_PORT: 80
-    networks:
-      - view
-
-  express:
+  nuxt:
     tty: true
     stdin_open: true
-    image: node:alpine
     init: true
-    env_file:
-      - .env
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: nuxt_prod
     volumes:
-      - ../:/app
+      - ../:/tmp/nuxt
     working_dir: /app
+    ports:
+      - "3000:3000"
     environment:
-      NODE_ENV: production
-    command: ['bin/www']
-    networks:
-      - db
-      - view
-
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_database
-      MYSQL_USER: docker_mysql
-      MYSQL_PASSWORD: docker_db_pass
-      TZ: 'Asia/Tokyo'
-    expose:
-      - "3306"
-    volumes:
-      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - db_data:/var/lib/mysql
-    networks:
-      - db
-#  redis:
-#    image: redis
-#    networks:
-#      - back
-#    expose:
-#      - "6379"
-#      volumes:
-#        - redis:/data
-
-volumes:
-  db_data:
-#  redis:
-
-networks:
-  view:
-  db:
+      NODE_ENV: development
+      NUXT_HOST: 0.0.0.0
+    command: ['yarn', 'start']
