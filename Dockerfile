@@ -11,7 +11,6 @@ WORKDIR /app
 RUN rm -r .nuxt .git* .editorconfig .idea *.md
 RUN yarn
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
-EXPOSE 3000
 
 FROM nuxt_dev as nuxt_prod
 # 極力imageを削る
