@@ -1,2 +1,36 @@
-node_modules
+# need
+!assets
+!components
+!layouts
+!middleware
+!pages
+!plugins
+!static
+!store
+!test
+!.babelrc
+!.eslintrc.js
+!.prettierrc
+!jest.config.js
+!jsconfig.json
+!nuxt.config.js
+!package.json
+
+# docker
+#docker
+
+# node nuxt
+*/node_modules
+*/.nuxt
+
+# git
+*/.gitignore
+*/.github
+*/.git*
+
+# log
 npm-debug.log
+
+# editor
+*/.idea
+.editorconfig

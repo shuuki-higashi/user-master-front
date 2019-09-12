@@ -1,25 +1,15 @@
 version: '3.7'
 services:
-  server:
-    image: nginx
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - "80:80"
-    depends_on:
-      - nuxt
-    links:
-      - nuxt
-    environment:
-      NGINX_PORT: 80
-
   nuxt:
     tty: true
     stdin_open: true
     init: true
-    build: ../
+    build:
+      context: ../
+      dockerfile: Dockerfile
     volumes:
+      - ../docker/nuxt:/app/.nuxt
+      - ../docker/entrypoint.sh:/app/entrypoint.sh
       - ../:/app
     working_dir: /app
     ports:
