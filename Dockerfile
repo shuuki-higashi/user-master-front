@@ -8,11 +8,11 @@ ENV TZ Asia/Tokyo
 WORKDIR /tmp/nuxt
 COPY ./ /app/
 WORKDIR /app
-RUN rm -r .nuxt .git* .editorconfig .idea *.md
+RUN rm -rf .nuxt .git* .editorconfig .idea *.md
 RUN yarn
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 FROM nuxt_dev as nuxt_prod
 # 極力imageを削る
-RUN rm -r test .eslintrc.js .prettierrc jest.config.js
+RUN rm -rf test .eslintrc.js .prettierrc jest.config.js
 RUN yarn build
