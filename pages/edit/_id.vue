@@ -12,7 +12,7 @@
       <b-input v-model="email" type="email" maxlength="30"></b-input>
     </b-field>
 
-    <b-button @click="createUser(username, password, email)">編集</b-button>
+    <b-button @click="editUser(id, username, password, email)">編集</b-button>
   </section>
 </template>
 
@@ -20,6 +20,7 @@
 export default {
   data() {
     return {
+      id: null,
       username: null,
       password: null,
       email: null
@@ -28,22 +29,25 @@ export default {
 
   async created() {
     await this.$store.dispatch('edit/getUser', this.$route.params.id)
+    this.$data.id = this.$store.state.edit.user.id
     this.$data.username = this.$store.state.edit.user.userName
     this.$data.password = this.$store.state.edit.user.password
     this.$data.email = this.$store.state.edit.user.email
   },
 
   methods: {
-    async createUser(vusername, vpassword, vemail) {
+    async editUser(vid, vusername, vpassword, vemail) {
       try {
-        await this.$axios.$post('/users', {
+        console.log(vid)
+        await this.$axios.$patch('/users/' + vid, {
           userName: vusername,
           password: vpassword,
           email: vemail
         })
         this.$router.push('/')
       } catch (e) {
-        this.$buefy.dialog.alert('追加できませんでした')
+        console.log(e)
+        this.$buefy.dialog.alert('編集できませんでした')
       }
     }
   }
