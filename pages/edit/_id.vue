@@ -13,6 +13,7 @@
     </b-field>
 
     <b-button @click="editUser(id, username, password, email)">編集</b-button>
+    <b-button type="is-danger" @click="deleteUser(id)">削除</b-button>
   </section>
 </template>
 
@@ -48,6 +49,17 @@ export default {
       } catch (e) {
         console.log(e)
         this.$buefy.dialog.alert('編集できませんでした')
+      }
+    },
+
+    async deleteUser(vid) {
+      try {
+        console.log(vid)
+        await this.$axios.$delete('/users/' + vid)
+        this.$router.push('/')
+      } catch (e) {
+        console.log(e)
+        this.$buefy.dialog.alert('削除できませんでした')
       }
     }
   }
