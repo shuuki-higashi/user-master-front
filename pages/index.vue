@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <b-table
-      :data="data"
+      :data="users"
       :columns="columns"
       focusable
       selectable
@@ -16,7 +16,7 @@
 export default {
   data() {
     return {
-      data: [],
+      users: [],
       columns: [
         {
           field: 'id',
@@ -45,8 +45,12 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch('getUsers')
-    this.data = this.$store.state.users
+    try {
+      const usersRes = await this.$axios.$get('/users')
+      this.users = usersRes.users
+    } catch (e) {
+      this.$buefy.dialog.alert('ユーザを取得できませんでした')
+    }
   },
 
   methods: {

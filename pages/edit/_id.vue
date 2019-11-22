@@ -29,17 +29,20 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch('edit/getUser', this.$route.params.id)
-    this.$data.id = this.$store.state.edit.user.id
-    this.$data.username = this.$store.state.edit.user.userName
-    this.$data.password = this.$store.state.edit.user.password
-    this.$data.email = this.$store.state.edit.user.email
+    try {
+      const userRes = await this.$axios.$get('/users/' + this.$route.params.id)
+      this.id = userRes.user.id
+      this.username = userRes.user.userName
+      this.password = userRes.user.password
+      this.email = userRes.user.email
+    } catch (e) {
+      this.$buefy.dialog.alert('ユーザを取得できませんでした')
+    }
   },
 
   methods: {
     async editUser(vid, vusername, vpassword, vemail) {
       try {
-        console.log(vid)
         await this.$axios.$patch('/users/' + vid, {
           userName: vusername,
           password: vpassword,
@@ -47,18 +50,15 @@ export default {
         })
         this.$router.push('/')
       } catch (e) {
-        console.log(e)
         this.$buefy.dialog.alert('編集できませんでした')
       }
     },
 
     async deleteUser(vid) {
       try {
-        console.log(vid)
         await this.$axios.$delete('/users/' + vid)
         this.$router.push('/')
       } catch (e) {
-        console.log(e)
         this.$buefy.dialog.alert('削除できませんでした')
       }
     }
