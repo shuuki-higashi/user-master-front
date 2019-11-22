@@ -12,7 +12,7 @@
       <b-input v-model="email" type="email" maxlength="30"></b-input>
     </b-field>
 
-    <b-button @click="createUser(username, password, email)">作成</b-button>
+    <b-button @click="createUser(username, password, email)">編集</b-button>
   </section>
 </template>
 
@@ -24,6 +24,13 @@ export default {
       password: null,
       email: null
     }
+  },
+
+  async created() {
+    await this.$store.dispatch('edit/getUser', this.$route.params.id)
+    this.$data.username = this.$store.state.edit.user.userName
+    this.$data.password = this.$store.state.edit.user.password
+    this.$data.email = this.$store.state.edit.user.email
   },
 
   methods: {
